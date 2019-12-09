@@ -15,13 +15,13 @@ router.post('/users/login', async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.email, req.body.password)
         const token = await user.generateAuthToken()
-        res.send({
+        res.status(200).send({
             user,
             token
         })
         console.log('You are logged in!')
     } catch (e) {
-        res.status(500).send(e)
+        res.status(400).send(e)
     }
 })
 
@@ -32,7 +32,7 @@ router.post('/users', async (req, res) => {
         const token = await user.generateAuthToken()
         await user.save()
         sendWelcomeEmail(user.email, user.name)
-        res.status(200).send({
+        res.status(201).send({
             user,
             token
         })

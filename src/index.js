@@ -1,44 +1,34 @@
-const express = require('express')
-require("./db/mongoose")
-const userRouter = require('./routers/user')
-const taskRouter = require('./routers/task')
-
+const app = require('./app')
 const port = process.env.PORT
-const app = express()
-
-app.use(express.json())
-app.use(userRouter)
-app.use(taskRouter)
-
 //setting port
 app.listen(port, () => {
     console.log("server is up on port ", port)
 })
 
 //FILE upload
-const multer = require('multer')
-const upload = multer({
-    dest: 'images',
-    limits: {
-        fileSize: 1000000
-    },
-    fileFilter(req, file, cb) {
-        //file.originalname.endsWith('.jpg')
-        //file.originalname.match(/\.(jpg|jpeg)$/)
-        if (!file.originalname.match(/\.(jpg|jpeg)$/)) {
-            cb(new Error("Please upload an image."))
-        }
-        cb(undefined, true)
-    }
-})
+// const multer = require('multer')
+// const upload = multer({
+//     dest: 'images',
+//     limits: {
+//         fileSize: 1000000
+//     },
+//     fileFilter(req, file, cb) {
+//         //file.originalname.endsWith('.jpg')
+//         //file.originalname.match(/\.(jpg|jpeg)$/)
+//         if (!file.originalname.match(/\.(jpg|jpeg)$/)) {
+//             cb(new Error("Please upload an image."))
+//         }
+//         cb(undefined, true)
+//     }
+// })
 
-app.post('/upload', upload.single('upload'), (req, res) => {
-    res.send()
-}, (error, req, res, next) => {
-    res.status(400).send({
-        error: error.message
-    })
-})
+// app.post('/upload', upload.single('upload'), (req, res) => {
+//     res.send()
+// }, (error, req, res, next) => {
+//     res.status(400).send({
+//         error: error.message
+//     })
+// })
 
 // const jwt = require('jsonwebtoken')
 
